@@ -12,8 +12,8 @@
 @LAZYGLOBAL off.
 
 // Get the tab widget and controller tuner library
-RUNONCEPATH("/lib/tabWidget/tabWidget.ks").
-RUNONCEPATH("tunerUI.ks").
+RUNONCEPATH("0:/bin/tabWidget/tabWidget").
+RUNONCEPATH("tunerUI").
 
 DECLARE function createFlightControllerGUI
 {
@@ -196,9 +196,11 @@ DECLARE function createFlightControllerGUI
 	LOCAL box1InfoValueRight TO box1Info:ADDVLAYOUT.
 
 	// Add the Waypoint direction and distance to the UI
+	box1InfoLabelLeft:ADDLABEL("Waypoint:").
 	box1InfoLabelLeft:ADDLABEL("Waypoint Direction:").
 	box1InfoLabelLeft:ADDLABEL("Waypoint Distance:").
 
+	LOCAL value1VORName TO box1InfoValueLeft:ADDLABEL("<None>").
 	LOCAL value1VOR TO box1InfoValueLeft:ADDLABEL("...").
 	LOCAL value1VORDist TO box1InfoValueLeft:ADDLABEL("...").
 
@@ -349,6 +351,15 @@ DECLARE function createFlightControllerGUI
 		IF (checkbox1ToWayPoint:PRESSED)
 		{
 			SET FlyToWayPoint TO TRUE.
+			// Update Waypoint
+			FOR waypoint IN ALLWAYPOINTS() {
+				IF waypoint:ISSELECTED {
+					SET value1VORName:TEXT TO waypoint:NAME.
+					SET DesiredWaypoint TO waypoint:GEOPOSITION.
+				}
+			}
+
+
 			WHEN (ReachedWayPoint OR (NOT FlyToWayPoint)) THEN
 			{
 				SET ReachedWayPoint TO FALSE.

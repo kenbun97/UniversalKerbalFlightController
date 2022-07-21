@@ -11,7 +11,7 @@
 @LAZYGLOBAL off.
 CLEARSCREEN.
 
-RUNONCEPATH("flightControllerGUI.ks").
+RUNONCEPATH("flightControllerGUI").
 
 LOCAL DATA_FILE IS "0://flightController/tuningData.json".	// Name of the file where the tunning data is stored
 // Declare names to store the tunning variables under inside the json structure
@@ -76,10 +76,12 @@ LOCAL northPole TO LATLNG(90,0).
 
 // Set the desired waypoint...in the future, this should be initialized to blank,
 // then set by the user
-SET DesiredWaypoint TO KSC
+SET DesiredWaypoint TO KSC.
+
+PRINT "TESTING...".
 
 // *****************************************************************************
-// *  Function: saved						                 															 *
+// *  Function: save						                 															 *
 // *****************************************************************************
 // Define a function to save the GLOBAL AirplaneData to the DATA_FILE.
 // The programmer should ensure that any variable to be saved to the json file is
